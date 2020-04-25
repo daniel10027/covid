@@ -1,0 +1,194 @@
+{% load  static  %}<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>COVID-19</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'tracker/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+    <!-- Material Design Bootstrap -->
+
+  <link href="{% static 'tracker/css/mdb.min.css' %}" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="{% static 'tracker/css/style.min.css' %}" rel="stylesheet">
+  <style type="text/css">
+    html,
+    body,
+    header,
+    .carousel {
+      height: 60vh;
+    }
+
+    @media (max-width: 740px) {
+
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+
+    @media (min-width: 800px) and (max-width: 850px) {
+
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+ 
+
+
+  </div>
+  <!--/.Carousel Wrapper-->
+
+  <!--Main layout-->
+  <main>
+    <div class="container">
+
+      <!--Navbar-->
+      <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+
+        <!-- Navbar brand -->
+        <h2 class="navbar-brand">COVID-19 TRACKER</h2>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+         
+          <!-- Links -->
+
+          <form class="form-inline"  action="{% url 'search' %}" method="GET">
+            <div class="md-form my-0">
+              <input name="q" class="form-control mr-sm-2" type="text" placeholder="Rechercher un pays ....." aria-label="Search">
+            </div>
+          </form>
+        </div>
+        <!-- Collapsible content -->
+
+      </nav>
+      <!--/.Navbar-->
+
+      <!--Section: Products v.3-->
+      <section class="text-center mb-4">
+
+        <!--Grid row-->
+        <div class="row wow fadeIn">
+
+		  <!--Grid column-->
+{% for pay in pays %}
+          <div class="col-lg-3 col-md-6 mb-4">
+
+            <!--Card-->
+            <div class="card">
+
+              <!--Card image-->
+              <div class="view overlay">
+                <img src=" {% static 'tracker/img/corona.jpeg' %}" class="card-img-top"
+                  alt="">
+                <a>
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+              <!--Card image-->
+
+              <!--Card content-->
+              <div class="card-body text-center">
+                <!--Category & Title-->
+              
+                <h5>
+                  <strong> 
+                    <a href="{% url 'pays-detail' pay.nom %}">
+                      <span class="badge badge-pill danger-color">{{ pay.nom }}</span>
+                    </a>
+                  </strong>
+                </h5>
+               
+              </div>
+              <!--Card content-->
+            </div>
+            <!--Card-->
+          </div>
+		  <!--Grid column-->
+{% endfor %}
+        </div>
+        <!--Grid row-->
+
+      </section>
+      <!--Section: Products v.3-->
+
+	  {% if is_paginated %}
+	  {% if page_obj.has_previous %}
+		  <a class="btn btn-outline-info mb-4" href="?page=1">Debut</a>
+		  <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number}}">Précédent</a>
+	  {% endif%}
+	  {% for num in page_obj.paginator.page_range%}
+		  {% if page_obj.number == num %}
+		   <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+		  {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+		  <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+		  {% endif %}
+	  {% endfor %}
+	  {% if page_obj.has_next %}
+		  <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Suivant</a>
+		  <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Fin</a>
+	  {% endif%}
+
+	{% endif %}
+	<!--Pagination-->
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2019 Copyright:
+      <a href=" target="_blank"> ASSA BOKA </a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+ 
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static 'tracker/js/popper.min.js' %}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static 'tracker/js/bootstrap.min.js' %}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static 'tracker/js/mdb.min.js' %}"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+
+  </script>
+</body>
+
+</html>
